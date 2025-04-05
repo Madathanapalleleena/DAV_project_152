@@ -83,3 +83,70 @@ users_over_30 = ages[older_than_30]
 print("Ages of users older than 30 (first 10):\n", users_over_30[:10])
 print("\n")
 
+# Fancy Indexing
+specific_indices = [0, 5, 10]
+selected_ages = ages[specific_indices]
+print("Ages at specific indices:", selected_ages)
+print("\n")
+
+# Fast Sorting using np.sort and np.argsort
+sorted_minutes = np.sort(minutes_streamed)
+print("Sorted Minutes Streamed (first 5):", sorted_minutes[:5])
+
+indices_sorted_by_likes = np.argsort(liked_songs)
+print("Indices sorted by Number of Songs Liked (first 5):\n", indices_sorted_by_likes[:5])
+print("Liked songs in sorted order (first 5):\n", liked_songs[indices_sorted_by_likes[:5]])
+print("\n")
+
+
+
+print("Pandas Operations")
+
+# Series Object
+cs = pd.Series(df['Country'])
+print("Pandas Series of Countries (first 5):\n", cs.head())
+print("\n")
+
+# Data Frame Object (df is already a DataFrame)
+print("DataFrame Info:")
+df.info()
+print("\n")
+
+# Data Indexing and Selecting for Series
+print("First country in the Series:", cs[0])
+print("Countries at index 2 to 4:\n", cs[2:5])
+print("\n")
+
+# Data Indexing and Selecting for Data Frames
+print("DataFrame with only 'User_ID' and 'Age' columns:\n", df[['User_ID', 'Age']].head())
+print("\n")
+print("Row at index 1 of the DataFrame:\n", df.loc[1])
+print("\n")
+print("Value in the 'Streaming Platform' column at index 3:", df.iloc[3, df.columns.get_loc('Streaming Platform')])
+print("\n")
+
+# Universal Functions for Index Preservation
+def add_prefix(country):
+    return "Country: " + country
+
+countries_with_prefix = cs.map(add_prefix)
+print("Series with added prefix:\n", countries_with_prefix.head())
+print("\n")
+
+# Index Alignment and Operations between Series and Data Frames
+age_series = pd.Series(df['Age'], index=df['User_ID'])
+minutes_series = pd.Series(df['Minutes Streamed Per Day'], index=df['User_ID'])
+
+age_plus_minutes = age_series + minutes_series # Alignment by index
+print("Age + Minutes Streamed (first 5):\n", age_plus_minutes.head())
+print("\n")
+
+# Handling missing data, operating on Null values
+print("Checking for null values in the DataFrame:")
+print(df.isnull().sum()) # No null values in this sample
+print("\n")
+
+# Hierarchical Indexing
+hierarchical_index = df.set_index(['Country', 'Streaming Platform'])
+print("DataFrame with Hierarchical Index (first 5 rows):\n", hierarchical_index.head())
+print("\n")
