@@ -137,16 +137,76 @@ print("\n")
 age_series = pd.Series(df['Age'], index=df['User_ID'])
 minutes_series = pd.Series(df['Minutes Streamed Per Day'], index=df['User_ID'])
 
-age_plus_minutes = age_series + minutes_series # Alignment by index
-print("Age + Minutes Streamed (first 5):\n", age_plus_minutes.head())
+am = age_series + minutes_series 
+print("Age + Minutes Streamed (first 5):\n", am.head())
 print("\n")
 
 # Handling missing data, operating on Null values
 print("Checking for null values in the DataFrame:")
-print(df.isnull().sum()) # No null values in this sample
+print(df.isnull().sum()) 
 print("\n")
 
 # Hierarchical Indexing
 hierarchical_index = df.set_index(['Country', 'Streaming Platform'])
 print("DataFrame with Hierarchical Index (first 5 rows):\n", hierarchical_index.head())
 print("\n")
+#combining dataframes
+# Create a second sample DataFrame for demonstration
+data2 = {'User_ID': ['U1000', 'U1005', 'U1025'],
+         'Favorite Color': ['Blue', 'Green', 'Red']}
+df2 = pd.DataFrame(data2)
+print("Second DataFrame (df2):\n", df2)
+print("\n")
+
+# Concat
+concatenated_df = pd.concat([df.head(3), df2], ignore_index=True)
+print("Concatenated DataFrame:\n", concatenated_df)
+print("\n")
+
+# Append
+appended_df = df.head(3).append(df2, ignore_index=True)
+print("Appended DataFrame:\n", appended_df)
+print("\n")
+
+# Merge and Joins
+merged_df = pd.merge(df, df2, on='User_ID', how='left') # Left join
+print("Merged DataFrame (left join):\n", merged_df.head())
+print("\n")
+
+# Aggregation and Grouping
+average_minutes_by_country = df.groupby('Country')['Minutes Streamed Per Day'].mean()
+print("Average Minutes Streamed Per Day by Country:\n", average_minutes_by_country)
+print("\n")
+
+# Pivot Tables
+pt = pd.pivot_table(df, values='Minutes Streamed Per Day', index='Country',
+                            columns='Subscription Type', aggfunc='mean')
+print("Pivot Table (Average Minutes Streamed by Country and Subscription Type):\n", pt)
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 6))  # Adjust figure size if needed
+plt.hist(df['Age'], bins=20, edgecolor='black')
+plt.title('Distribution of Ages')
+plt.xlabel('Age')
+plt.ylabel('Number of Users')
+plt.grid(True)
+plt.show()
+
+plt.figure(figsize=(8, 6))
+plt.scatter(df['Age'], df['Minutes Streamed Per Day'])
+plt.title('Age vs. Minutes Streamed Per Day')
+plt.xlabel('Age')
+plt.ylabel('Minutes Streamed Per Day')
+plt.grid(True)
+plt.show()
+
+platform_counts = df['Streaming Platform'].value_counts()
+plt.figure(figsize=(10, 6))
+platform_counts.plot(kind='bar', edgecolor='black')
+plt.title('Number of Users per Streaming Platform')
+plt.xlabel('Streaming Platform')
+plt.ylabel('Number of Users')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
