@@ -38,8 +38,6 @@ Basic data analysis using Python -- Numpy,Pandas and matplotlib.
 * **Saving Figures:** `plt.savefig('filename.png')`
 * **Showing Plots:** `plt.show()`
 
-## Contributing
 
-Contributions welcome.
 
 
