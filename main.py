@@ -163,11 +163,6 @@ concatenated_df = pd.concat([df.head(3), df2], ignore_index=True)
 print("Concatenated DataFrame:\n", concatenated_df)
 print("\n")
 
-# Append
-appended_df = df.head(3).append(df2, ignore_index=True)
-print("Appended DataFrame:\n", appended_df)
-print("\n")
-
 # Merge and Joins
 merged_df = pd.merge(df, df2, on='User_ID', how='left') # Left join
 print("Merged DataFrame (left join):\n", merged_df.head())
