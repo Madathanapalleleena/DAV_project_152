@@ -205,3 +205,71 @@ plt.ylabel('Number of Users')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
 plt.show()
+
+import seaborn as sns
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.cm as cm
+import matplotlib.colors as colors
+
+# Simple Line Plot
+plt.figure(figsize=(8, 5))
+plt.plot(df['Age'][:20], label='Age (first 20 users)', color='blue', marker='o')
+plt.title("Simple Line Plot of Ages")
+plt.xlabel("Index")
+plt.ylabel("Age")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Visualizing Errors with Error Bars
+mean_minutes = df['Minutes Streamed Per Day'].mean()
+std_minutes = df['Minutes Streamed Per Day'].std()
+x = np.arange(10)
+y = df['Minutes Streamed Per Day'][:10]
+plt.errorbar(x, y, yerr=std_minutes/10, fmt='o', color='purple', ecolor='lightgray', elinewidth=3, capsize=0)
+plt.title('Error Bars Example')
+plt.xlabel('User Index')
+plt.ylabel('Minutes Streamed')
+plt.grid(True)
+plt.show()
+
+# Density and Contour Plot
+sns.kdeplot(df['Age'], fill=True, color='skyblue')
+plt.title("Density Plot of Age")
+plt.xlabel("Age")
+plt.ylabel("Density")
+plt.grid(True)
+plt.show()
+
+# Histogram Binnings (custom bins)
+plt.hist(df['Minutes Streamed Per Day'], bins=np.arange(0, 301, 30), edgecolor='black', color='orange')
+plt.title("Histogram with Custom Bins")
+plt.xlabel("Minutes Streamed Per Day")
+plt.ylabel("User Count")
+plt.grid(True)
+plt.show()
+
+# Multiple Subplots
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+axes[0].hist(df['Age'], bins=10, color='skyblue', edgecolor='black')
+axes[0].set_title("Age Distribution")
+axes[1].scatter(df['Age'], df['Number of Songs Liked'], color='red')
+axes[1].set_title("Age vs. Songs Liked")
+plt.tight_layout()
+plt.show()
+
+# Three-dimensional plotting
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(df['Age'], df['Minutes Streamed Per Day'], df['Number of Songs Liked'], c='green', s=20)
+ax.set_xlabel('Age')
+ax.set_ylabel('Minutes Streamed')
+ax.set_zlabel('Songs Liked')
+plt.title("3D Plot of Users")
+plt.show()
+
+# Seaborn Heatmap (Correlation Matrix)
+plt.figure(figsize=(8, 6))
+sns.heatmap(df[['Age', 'Minutes Streamed Per Day', 'Number of Songs Liked']].corr(), annot=True, cmap='coolwarm')
+plt.title("Correlation Heatmap")
+plt.show()
